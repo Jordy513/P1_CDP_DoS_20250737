@@ -10,17 +10,15 @@
 2. [Objetivo del Script](#2-objetivo-del-script)
    - [Parámetros de Uso](#21-parámetros-de-uso)
    - [Requisitos del Sistema](#22-requisitos-del-sistema)
-3. [¿Qué es CDP y por qué es vulnerable?](#3-qué-es-cdp-y-por-qué-es-vulnerable)
-4. [Funcionamiento del Script](#4-funcionamiento-del-script)
-5. [Documentación de la Red](#5-documentación-de-la-red)
-   - [Topología](#51-topología)
-   - [Tabla de Dispositivos](#52-tabla-de-dispositivos)
-   - [Direccionamiento IP](#53-direccionamiento-ip)
-6. [Ejecución del Ataque](#6-ejecución-del-ataque)
-7. [Capturas de Pantalla](#7-capturas-de-pantalla)
-8. [Contramedidas y Mitigación](#8-contramedidas-y-mitigación)
-9. [Video Demostrativo](#9-video-demostrativo)
-10. [Referencias](#10-referencias)
+3. [Funcionamiento del Script](#3-funcionamiento-del-script)
+4. [Documentación de la Red](#4-documentación-de-la-red)
+   - [Topología](#41-topología)
+   - [Tabla de Dispositivos](#42-tabla-de-dispositivos)
+5. [Ejecución del Ataque](#5-ejecución-del-ataque)
+6. [Capturas de Pantalla](#6-capturas-de-pantalla)
+7. [Contramedidas y Mitigación](#7-contramedidas-y-mitigación)
+8. [Video Demostrativo](#8-video-demostrativo)
+9. [Referencias](#9-referencias)
 
 ---
 
@@ -41,7 +39,7 @@ Este laboratorio se realiza íntegramente en un entorno controlado y virtualizad
 
 ## 2. Objetivo del Script
 
-El script `JonathanRondon_20250737_CDP_DoS.py` automatiza la creación e inyección masiva de paquetes CDP maliciosos hacia un switch Cisco de destino.
+El script `Attack_DoS_CDP_20250737.py` automatiza la creación e inyección masiva de paquetes CDP maliciosos hacia un switch Cisco de destino.
 
 Utilizando la librería **Scapy**, el código:
 - Falsifica continuamente la dirección MAC de origen (`RandMAC()`).
@@ -54,7 +52,7 @@ Esto fuerza al switch a **registrar miles de vecinos CDP inexistentes**, agotand
 ### 2.1 Parámetros de Uso
 
 ```bash
-sudo python3 JonathanRondon_20250737_CDP_DoS.py [INTERFAZ]
+sudo python3 Attack_DoS_CDP_20250737.py.py [INTERFAZ]
 ```
 
 | Parámetro | Descripción | Requerido | Ejemplo |
@@ -64,10 +62,10 @@ sudo python3 JonathanRondon_20250737_CDP_DoS.py [INTERFAZ]
 **Ejemplos de uso:**
 ```bash
 # Usando la interfaz por defecto (eth0)
-sudo python3 JonathanRondon_20250737_CDP_DoS.py
+sudo python3 Attack_DoS_CDP_20250737.py.py
 
 # Especificando una interfaz diferente
-sudo python3 JonathanRondon_20250737_CDP_DoS.py eth1
+sudo python3 Attack_DoS_CDP_20250737.py.py eth1
 ```
 
 ### 2.2 Requisitos del Sistema
@@ -88,30 +86,8 @@ pip install scapy
 
 ---
 
-## 3. ¿Qué es CDP y por qué es vulnerable?
 
-**CDP (Cisco Discovery Protocol)** es un protocolo propietario de Cisco que opera en **Capa 2 del modelo OSI**. Su función es permitir que los dispositivos Cisco descubran y compartan información sobre sus vecinos directamente conectados (nombre del dispositivo, plataforma, versión IOS, capacidades, interfaces, etc.).
-
-### Características que lo hacen vulnerable:
-
-| Característica | Riesgo |
-|----------------|--------|
-| **Sin autenticación** | Cualquier dispositivo puede enviar tramas CDP y el switch las procesará sin verificar su legitimidad. |
-| **Confianza implícita** | El switch almacena en memoria RAM toda la información de cada vecino recibido. |
-| **Sin límite de entradas** | No hay restricción nativa en la cantidad de vecinos que se pueden registrar. |
-| **Habilitado por defecto** | CDP está activo en todas las interfaces Cisco por defecto, incluyendo puertos de acceso. |
-| **Procesa en CPU** | El procesamiento de tramas CDP ocurre en el plano de control (CPU), no en el ASIC de hardware. |
-
-### Vector de ataque:
-
-```
-Atacante → Envía miles de tramas CDP falsas → Switch procesa cada una
-         → Tabla de vecinos se llena → RAM y CPU saturadas → DoS
-```
-
----
-
-## 4. Funcionamiento del Script
+## 3. Funcionamiento del Script
 
 A continuación se explica el script **bloque por bloque**:
 
@@ -202,14 +178,14 @@ while True:
 
 ---
 
-## 5. Documentación de la Red
+## 4. Documentación de la Red
 
-### 5.1 Topología
+### 4.1 Topología
 
 ```
                     ┌─────────────┐
-                    │     R1      │ ← Router / Servidor DHCP
-                    │ e0/0        │   10.25.73.1/24
+                    │     R1      │ ← Router
+                    │ e0/0        │  
                     └──────┬──────┘
                            │ e0/0
                     ┌──────┴──────┐
@@ -223,8 +199,8 @@ while True:
           │         └─────────────┘         │
    ┌──────┴──────┐                   ┌──────┴──────┐  ┌─────────────┐
    │ Kali Linux  │                   │    VPC1     │  │    VPC2     │
-   │ (Atacante)  │                   │  (Víctima A)│  │  (Víctima B)│
-   │10.25.73.100 │                   │   DHCP      │  │   DHCP      │
+   │             │                   │             │  │             │
+   │             │                   │             │  │             │
    └──────┬──────┘                   └─────────────┘  └─────────────┘
           │ e1
    ┌──────┴──────┐
@@ -232,9 +208,9 @@ while True:
    └─────────────┘
 ```
 
-> 📸 Ver imagen de topología: `docs/topologia.png`
+>  Ver imagen de topología: `screenshots/topologia.png`
 
-### 5.2 Tabla de Dispositivos
+### 4.2 Tabla de Dispositivos
 
 | Dispositivo | Tipo | Interfaz | Rol | Notas |
 |-------------|------|----------|-----|-------|
@@ -245,27 +221,9 @@ while True:
 | **VPC1** | VPC | eth0 | Cliente Legítimo (Víctima A) | Obtiene IP por DHCP |
 | **VPC2** | VPC | eth0 | Cliente Legítimo (Víctima B) | Obtiene IP por DHCP |
 
-### 5.3 Direccionamiento IP
-
-> **Base del esquema:** Matrícula `20250737` → Bloque de red `20.25.37.0/24`
-
-| Dispositivo | Interfaz | VLAN | Dirección IP | Máscara | Método |
-|-------------|----------|------|-------------|---------|--------|
-| R1 | e0/0 | VLAN 10 | `20.25.37.1` | `/24` | Estática |
-| SW1 | — | Trunk | N/A (L2) | — | — |
-| SW2 | — | Trunk | N/A (L2) | — | — |
-| Kali Linux | eth0 | VLAN 10 | `20.25.37.100` | `/24` | Estática |
-| VPC1 | eth0 | VLAN 10 | `20.25.37.11–200` | `/24` | DHCP |
-| VPC2 | eth0 | VLAN 10 | `20.25.37.11–200` | `/24` | DHCP |
-
-**Pool DHCP configurado en R1:**
-- Rango excluido (reservado): `20.25.37.1 – 20.25.37.10`
-- Rango asignable: `20.25.37.11 – 10.25.73.254`
-- Default Gateway: `20.25.37.1`
-
 ---
 
-## 6. Ejecución del Ataque
+## 5. Ejecución del Ataque
 
 ### Paso 1: Preparar el entorno en Kali Linux
 
@@ -277,14 +235,14 @@ ip addr show eth0
 pip install scapy
 
 # Clonar el repositorio
-git clone https://github.com/JonathanRondon/JonathanRondon_20250737_CDP_DoS.git
-cd JonathanRondon_20250737_CDP_DoS
+git clone https://github.com/Jordy513/P1_CDP_DoS_20250737.git
+cd Attack_DoS_CDP_20250737
 ```
 
 ### Paso 2: Lanzar el ataque
 
 ```bash
-sudo python3 JonathanRondon_20250737_CDP_DoS.py eth0
+sudo python3 Attack_DoS_CDP_20250737.py eth0
 ```
 
 ### Paso 3: Verificar el efecto en SW2 (consola del switch)
@@ -309,7 +267,7 @@ Ctrl+C
 
 ---
 
-## 7. Capturas de Pantalla
+## 6. Capturas de Pantalla
 
 | # | Archivo | Descripción |
 |---|---------|-------------|
@@ -320,11 +278,11 @@ Ctrl+C
 | 5 | `screenshots/05_contramedida_aplicada.png` | Configuración de `no cdp enable` en la interfaz de acceso |
 | 6 | `screenshots/06_tabla_limpia_post_mitigacion.png` | Tabla CDP vacía tras aplicar la contramedida |
 
-> 📸 *Las capturas se encuentran en la carpeta `/screenshots` de este repositorio.*
+>  *Las capturas se encuentran en la carpeta `/screenshots` de este repositorio.*
 
 ---
 
-## 8. Contramedidas y Mitigación
+## 7. Contramedidas y Mitigación
 
 La defensa principal consiste en **no exponer CDP en puertos que conectan a dispositivos de usuario final**. CDP es un protocolo de administración que solo debe operar entre dispositivos de infraestructura (router-switch, switch-switch).
 
@@ -379,7 +337,7 @@ SW2(config-if)# no lldp receive
 
 ---
 
-## 9. Video Demostrativo
+## 8. Video Demostrativo
 
 🎥 **[Ver demostración en YouTube](https://youtube.com/enlace_aqui)**
 
@@ -396,7 +354,7 @@ SW2(config-if)# no lldp receive
 
 ---
 
-## 10. Referencias
+## 9. Referencias
 
 - Cisco Systems. (2023). *Cisco Discovery Protocol (CDP) Configuration Guide*. https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/cdp/configuration/xe-16/cdp-xe-16-book.html
 - Biondi, P. et al. (2024). *Scapy Documentation*. https://scapy.readthedocs.io/en/latest/
@@ -404,36 +362,4 @@ SW2(config-if)# no lldp receive
 - IEEE. (2016). *IEEE 802.1AB - Link Layer Discovery Protocol (LLDP)*.
 - Cisco Systems. (2023). *Cisco IOS Security Configuration Guide: Securing the Data Plane*. https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/sec_data_acl/configuration/xe-16/sec-data-acl-xe-16-book.html
 - ITLA. (2026). *Seguridad de Redes — Material de Curso 2026-C-2*.
-
----
-
-## 📁 Estructura del Repositorio
-
-```
-JonathanRondon_20250737_CDP_DoS/
-│
-├── README.md                               ← Este archivo
-├── JonathanRondon_20250737_CDP_DoS.py     ← Script del ataque
-│
-├── docs/
-│   └── topologia.png                      ← Diagrama de red
-│
-└── screenshots/
-    ├── 01_topologia_GNS3.png
-    ├── 02_script_ejecutandose.png
-    ├── 03_sw2_tabla_vecinos.png
-    ├── 04_sw2_cpu_saturada.png
-    ├── 05_contramedida_aplicada.png
-    └── 06_tabla_limpia_post_mitigacion.png
-```
-
----
-
-<div align="center">
-
-**Jonathan Esteban Rondon Corniel** · Matrícula: 20250737  
-Seguridad de Redes 2026-C-2 · ITLA · República Dominicana
-
-*Elaborado con fines exclusivamente educativos en un entorno de laboratorio controlado.*
-
-</div>
+- Troubleshooting y documentación apoyado en Inteligencia Artifical
