@@ -39,7 +39,7 @@ Este laboratorio se realiza íntegramente en un entorno controlado y virtualizad
 
 ## 2. Objetivo del Script
 
-El script `Attack_DoS_CDP_20250737.py` automatiza la creación e inyección masiva de paquetes CDP maliciosos hacia un switch Cisco de destino.
+El script `JordyRosario__20250737_Attack_DoS_CDP.py` automatiza la creación e inyección masiva de paquetes CDP maliciosos hacia un switch Cisco de destino.
 
 Utilizando la librería **Scapy**, el código:
 - Falsifica continuamente la dirección MAC de origen (`RandMAC()`).
@@ -52,7 +52,7 @@ Esto fuerza al switch a **registrar miles de vecinos CDP inexistentes**, agotand
 ### 2.1 Parámetros de Uso
 
 ```bash
-sudo python3 Attack_DoS_CDP_20250737.py [INTERFAZ]
+sudo python3 JordyRosario__20250737_Attack_DoS_CDP.py [INTERFAZ]
 ```
 
 | Parámetro | Descripción | Requerido | Ejemplo |
@@ -62,10 +62,10 @@ sudo python3 Attack_DoS_CDP_20250737.py [INTERFAZ]
 **Ejemplos de uso:**
 ```bash
 # Usando la interfaz por defecto (eth0)
-sudo python3 Attack_DoS_CDP_20250737.py
+sudo python3 JordyRosario__20250737_Attack_DoS_CDP.py
 
 # Especificando una interfaz diferente
-sudo python3 Attack_DoS_CDP_20250737.py eth1
+sudo python3 JordyRosario__20250737_Attack_DoS_CDP.py eth1
 ```
 
 ### 2.2 Requisitos del Sistema
@@ -236,13 +236,13 @@ pip install scapy
 
 # Clonar el repositorio
 git clone https://github.com/Jordy513/P1_CDP_DoS_20250737.git
-cd Attack_DoS_CDP_20250737
+cd P1_CDP_DoS_20250737
 ```
 
 ### Paso 2: Lanzar el ataque
 
 ```bash
-sudo python3 Attack_DoS_CDP_20250737.py eth0
+sudo python3 JordyRosario__20250737_Attack_DoS_CDP.py eth0
 ```
 
 ### Paso 3: Verificar el efecto en SW2 (consola del switch)
