@@ -52,7 +52,7 @@ Esto fuerza al switch a **registrar miles de vecinos CDP inexistentes**, agotand
 ### 2.1 Parámetros de Uso
 
 ```bash
-sudo python3 Attack_DoS_CDP_20250737.py.py [INTERFAZ]
+sudo python3 Attack_DoS_CDP_20250737.py [INTERFAZ]
 ```
 
 | Parámetro | Descripción | Requerido | Ejemplo |
@@ -62,10 +62,10 @@ sudo python3 Attack_DoS_CDP_20250737.py.py [INTERFAZ]
 **Ejemplos de uso:**
 ```bash
 # Usando la interfaz por defecto (eth0)
-sudo python3 Attack_DoS_CDP_20250737.py.py
+sudo python3 Attack_DoS_CDP_20250737.py
 
 # Especificando una interfaz diferente
-sudo python3 Attack_DoS_CDP_20250737.py.py eth1
+sudo python3 Attack_DoS_CDP_20250737.py eth1
 ```
 
 ### 2.2 Requisitos del Sistema
@@ -361,5 +361,4 @@ SW2(config-if)# no lldp receive
 - Scapy Contributors. (2024). *Scapy CDP Module*. https://scapy.readthedocs.io/en/latest/api/scapy.contrib.cdp.html
 - IEEE. (2016). *IEEE 802.1AB - Link Layer Discovery Protocol (LLDP)*.
 - Cisco Systems. (2023). *Cisco IOS Security Configuration Guide: Securing the Data Plane*. https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/sec_data_acl/configuration/xe-16/sec-data-acl-xe-16-book.html
-- ITLA. (2026). *Seguridad de Redes — Material de Curso 2026-C-2*.
 - Troubleshooting y documentación apoyado en Inteligencia Artifical
