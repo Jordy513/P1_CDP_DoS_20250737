@@ -339,7 +339,7 @@ SW2(config-if)# no lldp receive
 
 ## 8. Video Demostrativo
 
-🎥 **[Ver demostración en YouTube](https://youtube.com/enlace_aqui)**
+🎥 **[Ver demostración en YouTube]([https://youtube.com/enlace_aqui](https://youtu.be/dzmBnKbA7yc))**
 
 **Duración:** X:XX minutos
 
