@@ -272,7 +272,7 @@ Ctrl+C
 | # | Archivo | Descripción |
 |---|---------|-------------|
 | 1 | [01_topologia.png](screenshots/01_topologia.png) | Vista general de la topología en PNETLab con nombre y matrícula visibles |
-| 2 | `screenshots/02_script_ejecutandose.png` | Terminal de Kali Linux ejecutando el script CDP DoS |
+| 2 | [02_ataque_ejecutandose.png](screenshots/02_ataque_ejecutandose.png) | Terminal de Kali Linux ejecutando el script CDP DoS |
 | 3 | `screenshots/03_sw2_tabla_vecinos.png` | Consola de SW2 mostrando `show cdp neighbors` con entradas falsificadas |
 | 4 | `screenshots/04_sw2_cpu_saturada.png` | CPU del switch elevada durante el ataque (`show processes cpu`) |
 | 5 | `screenshots/05_contramedida_aplicada.png` | Configuración de `no cdp enable` en la interfaz de acceso |
