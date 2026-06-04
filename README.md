@@ -339,9 +339,9 @@ SW2(config-if)# no lldp receive
 
 ## 8. Video Demostrativo
 
-🎥 **[Ver demostración en YouTube]([https://youtube.com/enlace_aqui](https://youtu.be/dzmBnKbA7yc))**
+🎥 **[Ver demostración en YouTube](https://youtu.be/dzmBnKbA7yc)**
 
-**Duración:** X:XX minutos
+**Duración:** 5:06
 
 **Contenido del video:**
 - ✅ Topología visible con nombre y matrícula
